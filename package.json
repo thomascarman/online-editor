@@ -1,0 +1,14 @@
+{
+  "name": "editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node start.js && tsc -w",
+    "dev": "node node_modules/typescript/bin/tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Thomas Carman",
+  "license": "ISC"
+}

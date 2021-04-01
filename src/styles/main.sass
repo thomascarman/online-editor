@@ -1,0 +1,69 @@
+body
+    font-family: Courier, sans-serif
+    font-size: 14px
+    margin: 0
+    padding: 0
+
+.grid
+    display: grid
+    grid-template-columns: 1fr 3fr
+    grid-template-areas: "a d" "b d" "c d"
+    min-height: 100vh
+    width: 100vw
+    overflow: hidden
+
+#html
+    grid-area: a
+
+#css
+    grid-area: b
+
+#js
+    grid-area: c
+
+#code
+    grid-area: d
+    width: 100%
+    height: 100%
+    outline: none
+    background: #f4f4f9
+    border: 1px solid #ddd
+    resize: none
+
+textarea
+    outline: none
+    overflow: auto
+    border: 1px solid #ddd
+    resize: none
+
+.outputDisplay
+    margin: 0
+    height: 100%
+    width: 100%
+    padding: 0
+    display: grid
+    grid-template-rows: 1fr 250px
+
+    &__content
+        border: 1px solid #ddd
+
+    &__console
+        padding: 1rem 0.5rem
+        overflow: auto
+        background: black
+        color: #fff
+        border: 1px solid #ddd
+
+.console
+    &__line
+        margin-left: 0em
+
+        &--start
+
+            &::before
+                content: ">"
+                padding-right: 0.5em
+
+        @for $tab from 1 through 10
+            &--tab#{$tab}
+                margin-left: $tab * 2.5em
