@@ -1,59 +1,49 @@
-var http = require("http");
-var fs = require("fs");
-var path = require("path");
+let http = require("http");
+let fs = require("fs");
+let path = require("path");
 
-const port = 8080;
+const port = 80;
 
+console.log("Server starting...");
 http
-  .createServer(function (request, response) {
-    console.log("request starting...");
+  .createServer(function (req, res) {
 
-    var filePath = "./public" + request.url;
-    console.log(filePath);
+    let filePath = "./public" + req.url;
+    console.log('requesting: ' + filePath);
     if (filePath == "./public/") filePath = "./public/index.html";
 
-    var extname = path.extname(filePath);
-    var contentType = "text/html";
-    switch (extname) {
-      case ".js":
-        contentType = "text/javascript";
-        break;
-      case ".css":
-        contentType = "text/css";
-        break;
-      case ".json":
-        contentType = "application/json";
-        break;
-      case ".png":
-        contentType = "image/png";
-        break;
-      case ".jpg":
-        contentType = "image/jpg";
-        break;
-      case ".wav":
-        contentType = "audio/wav";
-        break;
+    let extname = path.extname(filePath);
+    let contentType = "text/html";
+
+    let contentTypes = {
+      ".js": "text/javascript",
+      ".css": "text/css",
+      ".json": "application/json",
+      ".png": "image/png",
+      ".jpg": "image/jpg",
+      ".wav": "audio/wav",
     }
+    contentType = contentTypes[extname] || contentType;
 
     fs.readFile(filePath, function (error, content) {
       if (error) {
         if (error.code == "ENOENT") {
           fs.readFile("./404.html", function (error, content) {
-            response.writeHead(200, { "Content-Type": contentType });
-            response.end(content, "utf-8");
+            res.writeHead(200, { "Content-Type": contentType });
+            res.end(content, "utf-8");
           });
         } else {
-          response.writeHead(500);
-          response.end(
+          res.writeHead(500);
+          res.end(
             "Sorry, check with the site admin for error: " +
               error.code +
               " ..\n"
           );
-          response.end();
+          res.end();
         }
       } else {
-        response.writeHead(200, { "Content-Type": contentType });
-        response.end(content, "utf-8");
+        res.writeHead(200, { "Content-Type": contentType });
+        res.end(content, "utf-8");
       }
     });
   })
